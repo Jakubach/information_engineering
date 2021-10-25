@@ -51,5 +51,7 @@ int main() {
         }
     }
 
+    // If there is more time you can do:
+    // https://www.codingame.com/training/easy/power-of-thor-episode-1
     return 0;
 }
