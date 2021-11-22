@@ -1,9 +1,5 @@
 #include <iostream>
 
-using namespace std;
-
-
-
 void capital_text(char* arr){
     int i = 0;
     while(arr[i] != '\0'){
@@ -28,6 +24,25 @@ int sum(int* arr, int arr_size){
     }
     return sum;
 }
+
+// swap - reference version
+
+void swap(int &a, int &b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// swap - pointers version (you have to pass addresses to variables in function)
+
+/*
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+*/
+
 
 void bubble_sort_dowhile(int* arr, int arr_size){
     bool changed = false;
@@ -74,21 +89,7 @@ void bubble_sort_for(int tab[], int arr_size)
     // 2. The bubble sort algorithm can be optimized by observing that the n-th pass finds the n-th largest element and puts it into its final place. (k--)
 }
 
-// swap - reference version
-void swap(int &a, int &b){
-    int temp = a;
-    a = b;
-    b = temp;
-}
 
-// swap - pointers version (you have to pass addresses to variables in function)
-/*
-void swap(int *a, int *b){
-    int* temp = a;
-    *a = *b;
-    *b = *temp;
-}
-*/
 
 void text_statistic(char* arr, int arr_size){
     int n = 1;
