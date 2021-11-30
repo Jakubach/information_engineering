@@ -94,16 +94,49 @@ void count_at(char* text, int arr_size){
     std::cout << "at" << " occurs "<< counter << " times." << std::endl;
 }
 
+unsigned int semifactorial(unsigned int n)
+{
+    int result = 1;
+    //round up positive number x <=> (x + 1) / 2;
+    for (int i=0; i<=(n + 1) / 2 - 1; i++){
+        result *= (n - 2 * i);
+    }
+    // another version
+    /*
+    for (int i=n; i>=0; i=i-2)
+    {
+        if(i<=1){
+            return result;
+        }
+        else{
+            result *= i;
+        }
+    }
+    */
+    return result;
+}
 
+unsigned int recursive_semifactorial(unsigned int n)
+{
+    if(n<=1){
+        return 1;
+    }
+    return n*recursive_semifactorial(n-2);
+}
 
 int main()
 {
-
+    // Mid-term review
+    // Exercise 0: Creating a menu
+    // Exercise 1: Count all small letters in sentence (functions, arrays, pointers, conditionals)
+    // Exercise 2: Count all "at" in sentence (functions, arrays, pointers, conditionals)
+    // Exercise 3: Write semifactorial function in two ways, using recursion and using loop.
+    // https://en.wikipedia.org/wiki/Double_factorial
 
     int key;
     do{
         std::cout << "Please select a task." << std::endl;
-        std::cout << "1 - Task 1" << std::endl << "2 - Task 2" << std::endl << "0 - Exit"<< std::endl;
+        std::cout << "1 - Task 1" << std::endl << "2 - Task 2" << std::endl << "3 - Task 3" << std::endl<< "0 - Exit"<< std::endl;
         std::cin >> key;
         switch (key) {
         case 1:{
@@ -122,6 +155,14 @@ int main()
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cin.getline(text_array, ARR_SIZE);
             count_at(text_array,ARR_SIZE);
+            break;
+        }
+        case 3:{
+            std::cout << "Task 3 selected" << std::endl;
+            int semifactorial_argument = 0;
+            std::cin >> semifactorial_argument;
+            std::cout << "Result from semifactorial with loop: " << semifactorial(semifactorial_argument) << std::endl;
+            std::cout << "Result from semifactorial with recursion: " << recursive_semifactorial(semifactorial_argument) << std::endl;
             break;
         }
         case 0:{
