@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 
 #define ARR_SIZE 100
 
@@ -88,13 +87,31 @@ void count_capital_letters(char* arr, int arr_size){
     }
 }
 
-double my_sin(double x,int n = 1000){
-    // x - angle in radians
-    double result = 1;
-    for(int i=1;i<=n;i++){
-        result *= x*(1-pow((x/(n*M_PI)),2));
+unsigned int semifactorial(unsigned int n)
+{
+    int result = 1;
+    //round up positive number x <=> (x + 1) / 2;
+    for (int i=0; i<=(n + 1) / 2 - 1; i++){
+        result *= (n - 2 * i);
     }
+   // for (int i=n; i>=0; i=i-2)
+    //{
+    //    if(i<=1){
+    //        return result;
+     //   }
+    //    else{
+     //       result *= i;
+     //   }
+    //}
     return result;
+}
+
+unsigned int recursive_semifactorial(unsigned int n)
+{
+    if(n<=1){
+        return 1;
+    }
+    return n*recursive_semifactorial(n-2);
 }
 
 int main()
@@ -103,13 +120,14 @@ int main()
     char array[ARR_SIZE] = "ABCdefB";
     count_capital_letters(array,ARR_SIZE);
     std::cout << std::endl;
-    std::cout << my_sin(M_PI/2) << std::endl;
+    std::cout << semifactorial(5) << std::endl;
+    std::cout << recursive_semifactorial(5) << std::endl;
     // Example tasks on lesson
     // 0. do while loop all the tasks
     // 1. Count all "at" in sentence - possible to change (functions, arrays, pointers, conditionals)
     // I am studying in Poznan at PUT.
     // 2. Count all small letters in sentence (functions, arrays, pointers, conditionals)
-    // 3. sin function pi notation formula and sigma (be careful with sin fubction if std)
-    // https://medium.com/mathadam/how-to-use-%CF%80-product-notation-ae4a4c257471
+    // 3. semifactorial function
+    // https://en.wikipedia.org/wiki/Double_factorial
     return 0;
 }
