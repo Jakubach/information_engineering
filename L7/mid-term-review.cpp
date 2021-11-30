@@ -2,7 +2,17 @@
 
 #define ARR_SIZE 100
 
-using namespace std;
+void swap(char &a, char &b){
+    char temp = a;
+    a = b;
+    b = temp;
+}
+
+void swap(int &a, int &b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
 
 void bubble_sort(int tab[], int arr_size)
 {
@@ -53,40 +63,78 @@ void count_small_letters(char* text, int arr_size){
     }
 }
 
+void count_small_letter(char* text, int arr_size){
+    for(int i=0; i<26; i++){
+        //std::cout << "Couting letter: " << char(i+'a') << std::endl;
+        int counter = 0;
+        for(int j=0;j<arr_size;j++){
+            if(text[j]=='\0'){
+                break;
+            }
+            else if(text[j] == char(i+'a')){
+                counter++;
+            }
+        }
+        if(counter > 0){
+            std::cout << char(i+'a') << " occurs " << counter << " times." << std::endl;
+        }
+    }
+}
+
+void count_at(char* text, int arr_size){
+    int counter = 0;
+    for(int i=0;i<arr_size-1;i++){
+        if(text[i]=='\0'){
+            break;
+        }
+        if(text[i] == 'a' && text[i+1] == 't'){
+            counter++;
+        }
+    }
+    std::cout << "at" << " occurs "<< counter << " times." << std::endl;
+}
+
+
 
 int main()
 {
-    cout << "Please select a task." << endl;
-    char key;
+
+
+    int key;
     do{
-        std::cout << "1 - Task 1" << std::endl << "2 - Task 2" << std::endl << "X - exit" <<std::endl;
+        std::cout << "Please select a task." << std::endl;
+        std::cout << "1 - Task 1" << std::endl << "2 - Task 2" << std::endl << "0 - Exit"<< std::endl;
         std::cin >> key;
-        switch(key) {
-        case '1':{
-            std::cout << "Task 1"<< std::endl;
-            char array[ARR_SIZE];
-            std::cin.clear(); // Clears error state of the buffer
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignores rest of the line
-            std::cin.getline(array,ARR_SIZE);
-            count_small_letters(array,ARR_SIZE);
+        switch (key) {
+        case 1:{
+            std::cout << "Task 1 selected" << std::endl;
+            char text_array[ARR_SIZE];
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.getline(text_array, ARR_SIZE);
+            count_small_letter(text_array,ARR_SIZE);
             break;
         }
-        case '2':
-        {
-            std::cout << "Task 2" << std::endl;
+        case 2:{
+            std::cout << "Task 2 selected" << std::endl;
+            char text_array[ARR_SIZE];
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.getline(text_array, ARR_SIZE);
+            count_at(text_array,ARR_SIZE);
             break;
         }
-        case 'X':
-        {
-            std::cout << "Exit"<< std::endl;
+        case 0:{
+            std::cout << "Exitting" << std::endl;
             break;
         }
         default:{
-            std::cout << "Please select task again"<< std::endl;
+            std::cout << "Please input different number" <<std::endl;
             break;
         }
 
         }
-    }while(key != 'X');
+    }while(key);
+
     return 0;
 }
