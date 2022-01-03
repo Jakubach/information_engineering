@@ -34,6 +34,10 @@ ISO C++ standard specifically mentions that all STL sequences that support opera
 which is accessible for vector
 So the main reason in the consistency (which makes our code time-predictable) and then also get the better performance.
 
+Why there is no push/pop front for vector?
+If we want to push/pop element in the front of a vector,
+we must shift (reallocation), and copy each element in the container by one step and that would cost O(n^2)
+for n objects.
 
 */
 bool is_prime(int number){
@@ -83,6 +87,21 @@ std::vector<int> create_vector(int min, int max, bool random = false){
     return numbers;
 }
 
+std::list<int> create_list(int min, int max, bool random = false){
+    std::list<int> numbers;
+    if(!random){
+        for(int i = min; i <= max;i++){
+            numbers.emplace_back(i);
+        }
+    }
+    else{
+        for(int i = 0; i < (max-min); i++){
+            numbers.emplace_back(min + std::rand() % (max-min+1));
+        }
+    }
+    return numbers;
+}
+
 void swap(int &a, int &b){
     int temp = a;
     a = b;
@@ -112,26 +131,80 @@ void bubble_sort(std::vector<int> numbers)
     }
 }
 
+void final_assignment_1(){
+    std::cout << "Measuring time of: " << std::endl;
+    auto start = std::chrono::steady_clock::now();
+    std::vector<int> numbers_vec = create_vector(1,100000);
+    auto end = std::chrono::steady_clock::now();
+    auto diff = end - start;
+    std::cout << "inserting 100 000 elements at the end of vector (emplace_back): " << std::chrono::duration <double, std::milli>(diff).count() << " ms" << std::endl;
+    start = std::chrono::steady_clock::now();
+    std::list<int> numbers_lst = create_list(1,100000);
+    end = std::chrono::steady_clock::now();
+    diff = end - start;
+    std::cout << "inserting 100 000 elements at the end of list (emplace_back): " << std::chrono::duration <double, std::milli>(diff).count() << " ms" << std::endl;
+    // inserting 100 000 elements at the beginning of vector
+    // inserting 100 000 elements at the beginning of list
+}
 
-int main()
-{
-    //srand(time(nullptr));
-    srand(0);
+void homework_1(){
     std::vector<int> numbers = create_vector(1,10);
     std::cout << "Before removing prime numbers: " << std::endl;
     print_vector(numbers);
     remove_prime_numbers_std(numbers);
     std::cout << "After removing prime numbers: " << std::endl;
     print_vector(numbers);
+}
 
-    int min = 0, max = 10000;
+void homework_2(){
+    int min = 0, max = 10000; // try for different values of max: 100,1000,10000
     std::vector<int> random_numbers = create_vector(min,max,true);
     auto start = std::chrono::steady_clock::now();
     bubble_sort(random_numbers);
     auto end = std::chrono::steady_clock::now();
     auto diff = end - start; // calculate time difference, and display in miliseconds
     std::cout << "Sorting time with " << max-min << " numbers: " << std::chrono::duration <double, std::milli>(diff).count() << " ms" << std::endl;
+}
 
+
+
+bool check_brackets(std::string expression){
+    std::vector<char> brackets; //openninng brackets
+    for(auto& character : expression){
+        if(character == '(' || character == '{' || character == '['){
+            brackets.push_back(character);
+        }
+        else if(character == ')' || character == '}' || character == ']'){
+            if(brackets.size() == 0){
+                return false;
+            }
+            char openning_bracket = brackets.back();
+            if((openning_bracket == '(' && character == ')')
+                    || (openning_bracket == '{' && character == '}')
+                    || (openning_bracket == '[' && character == ']')){
+                brackets.pop_back();
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    if(brackets.size() == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+int main()
+{
+    //srand(time(nullptr));
+    srand(0);
+    std::cout << "Brackets are properly opened and closed: " << check_brackets("{5 * [2 * (1 + 2)]} + 1");
+    //final_assignment_1();
+    //homework_1();
+    //homework_2();
     /*
     std::list<int> l4{ 5, 6, 7, 8 };
     // INCORRECT IN LISTS
