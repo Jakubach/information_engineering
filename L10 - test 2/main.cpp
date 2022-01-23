@@ -16,6 +16,7 @@ int main(){
     print_vector_vehicle_productions(vehicle_productions);
     print_largest_production(vehicle_productions);
     print_smallest_production(vehicle_productions );
-    sort_productions(vehicle_productions )
+    sort_productions(vehicle_productions );
+    //remember to add also the comparation functions (predicates) for std::algorithm functions
     return 0;
 }
